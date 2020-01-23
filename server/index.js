@@ -16,12 +16,13 @@ const request = require('request');
 const cors = require('cors');
 const querystring = require('querystring');
 const cookieParser = require('cookie-parser');
+const history = require('connect-history-api-fallback');
 const path = require('path');
 const cluster = require('cluster');
 const numCPUs = require('os').cpus().length;
 
-const { generateRandomString } = require('utils');
-const { STATE_KEY } = require('constants');
+const { generateRandomString } = require('./utils');
+const { STATE_KEY } = require('./constants');
 
 // Multi-process to utilize all CPU cores.
 if (cluster.isMaster) {
