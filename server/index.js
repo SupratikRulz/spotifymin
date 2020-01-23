@@ -130,6 +130,38 @@ if (cluster.isMaster) {
     }
   });
 
+  // Request new access_token with the refresh_token
+  app.get('/refresh_token', (req, res) => {
+    const refresh_token = req.query.refresh_token;
+    const authOptions = {
+      url: 'https://accounts.spotify.com/api/token',
+      headers: {
+        Authorization: `Basic ${new Buffer(`${CLIENT_ID}:${CLIENT_SECRET}`).toString('base64')}`,
+      },
+      form: {
+        grant_type: 'refresh_token',
+        refresh_token,
+      },
+      json: true,
+    };
+
+    // Requesting access token from refresh token from spotify
+    request.post(authOptions, (error, response, body) => {
+      if (!error && response.statusCode === 200) {
+        const access_token = body.access_token;
+        res.send({ access_token });
+      } else {
+        res.status(response.statusCode);
+        res.send({ error });
+      }
+    });
+  });
+
+  // All remaining requests return the react-app, so it can handle the rest of browser routing.
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, '../client/public', 'index.html'));
+  });
+
   // Start the server and listen on specified PORT
   app.listen(PORT, () => {
     console.warn(`Node cluster worker ${process.pid}: listening on port ${PORT}`);
