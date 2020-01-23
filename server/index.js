@@ -159,7 +159,7 @@ if (cluster.isMaster) {
 
   // All remaining requests return the react-app, so it can handle the rest of browser routing.
   app.get('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, '../client/public', 'index.html'));
+    res.sendFile(path.resolve(__dirname, '../client/build', 'index.html'));
   });
 
   // Start the server and listen on specified PORT
