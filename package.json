@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "A minimal spotify web application built using spotify web apis",
   "main": "server/index.js",
+  "homepage": "https://spotifymin.herokuapp.com/",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/SupratikRulz/spotifymin.git"
